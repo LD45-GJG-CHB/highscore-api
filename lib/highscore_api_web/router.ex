@@ -1,6 +1,5 @@
 defmodule HighscoreApiWeb.Router do
   use HighscoreApiWeb, :router
-  alias HighscoreApiWeb.PageController
   alias HighscoreApiWeb.ScoreController
 
   pipeline :browser do
