@@ -1,5 +1,7 @@
 defmodule HighscoreApiWeb.Router do
   use HighscoreApiWeb, :router
+  alias HighscoreApiWeb.PageController
+  alias HighscoreApiWeb.ScoreController
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -11,6 +13,8 @@ defmodule HighscoreApiWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+
+    resources "/game/scores", ScoreController, only: [:index, :show, :create]
   end
 
   scope "/", HighscoreApiWeb do
