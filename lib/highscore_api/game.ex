@@ -4,6 +4,7 @@ defmodule HighscoreApi.Game do
   """
 
   import Ecto.Query, warn: false
+  import Ecto.Query, only: [from: 2]
   alias HighscoreApi.Repo
 
   alias HighscoreApi.Game.Score
@@ -19,6 +20,12 @@ defmodule HighscoreApi.Game do
   """
   def list_scores do
     Repo.all(Score)
+  end
+
+  def list_scores_top do
+    query = from(s in Score,
+      order_by: [desc: s.score])
+    Repo.all(query)
   end
 
   @doc """

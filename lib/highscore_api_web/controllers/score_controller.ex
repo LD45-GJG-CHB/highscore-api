@@ -40,4 +40,9 @@ defmodule HighscoreApiWeb.ScoreController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def top(conn, _params) do
+    scores = Game.list_scores_top()
+    render(conn, "index.json", scores: scores)
+  end
 end

@@ -13,6 +13,7 @@ defmodule HighscoreApiWeb.Router do
   pipeline :api do
     plug :accepts, ["json"]
 
+    get "/game/scores/top", ScoreController, :top
     resources "/game/scores", ScoreController, only: [:index, :show, :create]
   end
 
