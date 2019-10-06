@@ -4,7 +4,7 @@ defmodule HighscoreApi.Game do
   """
 
   import Ecto.Query, warn: false
-  import Ecto.Query, only: [from: 2]
+  import Ecto.Query, only: [from: 2, subquery: 1]
   alias HighscoreApi.Repo
 
   alias HighscoreApi.Game.Score
@@ -18,13 +18,19 @@ defmodule HighscoreApi.Game do
       [%Score{}, ...]
 
   """
+
+  @list_scores_query from s in Score,
+      select_merge: %{
+        place: row_number() |> over(order_by: [desc: s.score])
+      }
+
   def list_scores do
-    Repo.all(Score)
+    Repo.all(@list_scores_query)
   end
 
-  def list_scores_top do
-    query = from(s in Score,
-      order_by: [desc: s.score])
+  def list_scores_top(limit) do
+    query = from s in subquery(@list_scores_query),
+      limit: ^limit
     Repo.all(query)
   end
 

@@ -41,8 +41,9 @@ defmodule HighscoreApiWeb.ScoreController do
     end
   end
 
-  def top(conn, _params) do
-    scores = Game.list_scores_top()
+  def top(conn, params) do
+    limit = params["limit"] || 20
+    scores = Game.list_scores_top(limit)
     render(conn, "index.json", scores: scores)
   end
 end

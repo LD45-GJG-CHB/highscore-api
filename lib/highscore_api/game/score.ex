@@ -7,6 +7,8 @@ defmodule HighscoreApi.Game.Score do
     field :score, :integer
 
     timestamps()
+
+    field :place, :integer, virtual: true
   end
 
   @doc false

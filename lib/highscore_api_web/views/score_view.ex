@@ -13,6 +13,8 @@ defmodule HighscoreApiWeb.ScoreView do
   def render("score.json", %{score: score}) do
     %{id: score.id,
       name: score.name,
-      score: score.score}
+      score: score.score,
+      place: score.place
+    }
   end
 end
