@@ -48,7 +48,11 @@ defmodule HighscoreApi.Game do
       ** (Ecto.NoResultsError)
 
   """
-  def get_score!(id), do: Repo.get!(Score, id)
+  def get_score!(id) do
+    query = from s in subquery(@list_scores_query),
+      where: s.id == ^id
+    Repo.one(query)
+  end
 
   @doc """
   Creates a score.
@@ -63,9 +67,14 @@ defmodule HighscoreApi.Game do
 
   """
   def create_score(attrs \\ %{}) do
-    %Score{}
+    result = %Score{}
     |> Score.changeset(attrs)
     |> Repo.insert()
+
+    case result do
+      {:ok, score} -> {:ok, get_score!(score.id)}
+      _ -> result
+    end
   end
 
   @doc """
@@ -80,11 +89,11 @@ defmodule HighscoreApi.Game do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_score(%Score{} = score, attrs) do
-    score
-    |> Score.changeset(attrs)
-    |> Repo.update()
-  end
+  # def update_score(%Score{} = score, attrs) do
+  #   score
+  #   |> Score.changeset(attrs)
+  #   |> Repo.update()
+  # end
 
   @doc """
   Deletes a Score.
@@ -98,9 +107,9 @@ defmodule HighscoreApi.Game do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_score(%Score{} = score) do
-    Repo.delete(score)
-  end
+  # def delete_score(%Score{} = score) do
+  #   Repo.delete(score)
+  # end
 
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking score changes.
@@ -111,7 +120,7 @@ defmodule HighscoreApi.Game do
       %Ecto.Changeset{source: %Score{}}
 
   """
-  def change_score(%Score{} = score) do
-    Score.changeset(score, %{})
-  end
+  # def change_score(%Score{} = score) do
+  #   Score.changeset(score, %{})
+  # end
 end
