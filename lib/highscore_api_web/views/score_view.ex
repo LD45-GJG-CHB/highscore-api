@@ -14,7 +14,8 @@ defmodule HighscoreApiWeb.ScoreView do
     %{id: score.id,
       name: score.name,
       score: score.score,
-      place: score.place
+      place: score.place,
+      difficulty: score.difficulty
     }
   end
 end

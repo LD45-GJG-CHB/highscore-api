@@ -5,6 +5,7 @@ defmodule HighscoreApi.Game.Score do
   schema "scores" do
     field :name, :string
     field :score, :integer
+    field :difficulty, :string
 
     timestamps()
 
@@ -14,7 +15,7 @@ defmodule HighscoreApi.Game.Score do
   @doc false
   def changeset(score, attrs) do
     score
-    |> cast(attrs, [:name, :score])
+    |> cast(attrs, [:name, :score, :difficulty])
     |> validate_required([:name, :score])
   end
 end
